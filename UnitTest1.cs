@@ -10,7 +10,7 @@ namespace TestProject1
 
 
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             driver.Navigate().GoToUrl("https://www.bstackdemo.com/");
@@ -18,11 +18,12 @@ namespace TestProject1
         }
 
         [Test]
-        public void Test1()
+        public void Login()
         {
             Thread.Sleep(1000);
             driver.FindElement(By.Id("signin")).Click();
 
+            // Loging in:
             Thread.Sleep(1000);
             driver.FindElement(By.Id("react-select-2-input")).SendKeys("demouser");
             driver.FindElement(By.Id("react-select-2-input")).SendKeys(Keys.Tab);
@@ -33,12 +34,27 @@ namespace TestProject1
 
             Thread.Sleep(1000);
             driver.FindElement(By.Id("login-btn")).Click();
+        }
+
+        [Test]
+        public void SortApplePhoneByPrice()
+        {
+            Login();
 
             Thread.Sleep(1000);
             driver.FindElement(By.XPath("//span[text()='Apple']")).Click();
 
             Thread.Sleep(1000);
-            driver.FindElement(By.XPath("//option[@value='lowestprice']")).Click();
+            driver.FindElement(By.XPath("//option[text()='Lowest to highest']")).Click();
+
+            Thread.Sleep(1000);
+        }
+
+
+        [Test]
+        public void OrderScreen()
+        {
+            SortApplePhoneByPrice();
 
             Thread.Sleep(2000);
             driver.FindElement(By.XPath("//div[text()='Add to cart']")).Click();
@@ -55,20 +71,27 @@ namespace TestProject1
 
             Thread.Sleep(1000);
             driver.FindElement(By.Id("checkout-shipping-continue")).Click();
+        }
+
+        [Test]
+        public void CheckoutScreen()
+        {
+            OrderScreen();
 
             Thread.Sleep(1000);
             driver.FindElement(By.Id("downloadpdf")).Click();
 
+
             Thread.Sleep(2000);
-            driver.FindElement(By.XPath("//button[text()='Continue Shopping »']")).Click();
+            driver.FindElement(By.XPath("//button[contains(text(),'Continue Shopping')]")).Click();
 
             Thread.Sleep(1000);
             driver.FindElement(By.Id("logout")).Click();
 
         }
 
-        [TearDown]
-        public void Cleanup() 
+        [OneTimeTearDown]
+        public void Cleanup()
         {
             driver.Close();
             driver.Quit();
