@@ -63,7 +63,7 @@ namespace TestProject1
             driver.FindElement(By.XPath("//button[text()='Continue Shopping »']")).Click();
 
             Thread.Sleep(1000);
-            driver.FindElement(By.Id("downloadpdf")).Click();
+            driver.FindElement(By.Id("logout")).Click();
 
         }
 
